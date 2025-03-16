@@ -1,9 +1,12 @@
-import { Admin } from "react-admin";
+import { Admin, Resource } from "react-admin";
+import authProvider from "./Provider/AuthProvider.";
 
 function App() {
   return (
     <>
-      <Admin></Admin>
+      <Admin authProvider={authProvider}>
+        <Resource name="post"></Resource>
+      </Admin>
     </>
   );
 }
