@@ -4,17 +4,19 @@ import { BASE_URL } from "../Constant";
 const authProvider: AuthProvider = {
     login: async (params: any): Promise<{ redirectTo?: string | boolean } | void> => {
         console.log("Received params in login:", params);
-        const { username, password } = params;
+        const { username, password, type } = params;
 
         try {
             if (!username || !password) {
                 throw new Error("Email and password are required.");
             }
-
+            if ( type != "admin"){
+                throw new Error("Only admin is permitted.");
+            }
             const response = await fetch(`${BASE_URL}/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: username, password }),
+                body: JSON.stringify({ email: username, password, type }),
             });
 
             if (!response.ok) {
