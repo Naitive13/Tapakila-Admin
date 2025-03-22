@@ -2,9 +2,7 @@ import { CreateParams, CreateResult, DataProvider, DeleteManyParams, DeleteManyR
 import { BASE_URL } from "../Constant";
 
 export const UserDataProvider: DataProvider = {
-    getList: async function <RecordType extends RaRecord = any>
-        (resource: string, params: GetListParams & QueryFunctionContext)
-        : Promise<GetListResult<RecordType>> {
+    getList: async function <RecordType extends RaRecord = any>(resource: string, params: GetListParams & QueryFunctionContext): Promise<GetListResult<RecordType>> {
 
         const response = await fetch(`${BASE_URL}/user/all`, { method: 'GET' });
 
@@ -12,20 +10,30 @@ export const UserDataProvider: DataProvider = {
             throw new Error('Network response was not ok');
         }
 
-        const jsonData = await response.json(); 
+        const jsonData = await response.json();
         // debug by naitive13
         for (let index = 0; index < jsonData.length; index++) {
             const element = jsonData[index];
-            jsonData[index] = {...element, id:index};
+            jsonData[index] = { ...element, id: index };
         }
-        console.log(jsonData);
         //end of debug
-
         const result: GetListResult = {
-            data:jsonData,
-            total: jsonData.length, 
+            data: jsonData,
+            total: jsonData.length,
         };
 
         return result;
-    }
+    },
+    getOne: async function <RecordType extends RaRecord = any>(resource: string, params: GetOneParams<RecordType> & QueryFunctionContext): Promise<GetOneResult<RecordType>> {
+        const { id } = params;
+        const data = await fetch(
+            `${BASE_URL}/users/all/${id}`,
+            { method: "GET" },
+        );
+
+        const result: GetOneResult = {
+            data: await data.json(),
+        };
+        return result;
+    },
 };
