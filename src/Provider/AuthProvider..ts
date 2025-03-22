@@ -1,22 +1,25 @@
 import { AuthProvider, QueryFunctionContext } from "react-admin";
 import { BASE_URL } from "../Constant";
 
+function decodeJWT(token: string) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(atob(base64));
+}
+
 const authProvider: AuthProvider = {
     login: async (params: any): Promise<{ redirectTo?: string | boolean } | void> => {
         console.log("Received params in login:", params);
-        const { username, password, type } = params;
+        const { username, password } = params;
 
         try {
             if (!username || !password) {
                 throw new Error("Email and password are required.");
             }
-            if ( type != "admin"){
-                throw new Error("Only admin is permitted.");
-            }
             const response = await fetch(`${BASE_URL}/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: username, password, type }),
+                body: JSON.stringify({ email: username, password}),
             });
 
             if (!response.ok) {
@@ -26,9 +29,15 @@ const authProvider: AuthProvider = {
             }
 
             const data = await response.json();
+            const detailedData = decodeJWT(data.token);
+            
+            if (detailedData.userType != "admin"){
+                throw new Error("Must be admin to log in! userType : " + detailedData.userType);
+            }
+            
             console.log("Login success:", data);
             localStorage.setItem("accessToken", data.token);
-            return { redirectTo: "/" };
+            return { redirectTo: "/" 
 
         } catch (error) {
             console.error("Login failed:", error);
