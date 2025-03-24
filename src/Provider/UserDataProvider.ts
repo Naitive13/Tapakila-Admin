@@ -18,7 +18,7 @@ export const UserDataProvider: DataProvider = {
         }
         //end of debug
         const result: GetListResult = {
-            data: jsonData,
+            data: jsonData.map(user => ({ ...user, id: user.userId })),
             total: jsonData.length,
         };
 
@@ -26,14 +26,18 @@ export const UserDataProvider: DataProvider = {
     },
     getOne: async function <RecordType extends RaRecord = any>(resource: string, params: GetOneParams<RecordType> & QueryFunctionContext): Promise<GetOneResult<RecordType>> {
         const { id } = params;
-        const data = await fetch(
-            `${BASE_URL}/users/all/${id}`,
-            { method: "GET" },
-        );
+        const response = await fetch(`${BASE_URL}/user/${id}`, { method: "GET" });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok !');
+        }
+
+        const jsonData = await response.json();
 
         const result: GetOneResult = {
-            data: await data.json(),
+            data: { ...jsonData, id: jsonData.userId },
         };
         return result;
     },
+
 };
