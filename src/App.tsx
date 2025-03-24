@@ -1,5 +1,5 @@
 import { Admin, Resource } from "react-admin";
-import authProvider from "./Provider/AuthProvider.";
+import { authProvider } from "./Provider/AuthProvider.";
 import { UserDataProvider } from "./Provider/UserDataProvider";
 import { UserList, UserShow } from "./Components/UserComponents";
 
