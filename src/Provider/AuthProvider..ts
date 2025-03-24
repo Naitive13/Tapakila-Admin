@@ -1,4 +1,4 @@
-import { AuthProvider, QueryFunctionContext } from "react-admin";
+import { AuthProvider } from "react-admin";
 import { BASE_URL } from "../Constant";
 
 function decodeJWT(token: string) {
@@ -7,7 +7,7 @@ function decodeJWT(token: string) {
     return JSON.parse(atob(base64));
 }
 
-const authProvider: AuthProvider = {
+export const authProvider: AuthProvider = {
     login: async (params: any): Promise<{ redirectTo?: string | boolean } | void> => {
         console.log("Received params in login:", params);
         const { username, password } = params;
@@ -37,7 +37,7 @@ const authProvider: AuthProvider = {
             
             console.log("Login success:", data);
             localStorage.setItem("accessToken", data.token);
-            return { redirectTo: "/" 
+            return { redirectTo: "/"};
 
         } catch (error) {
             console.error("Login failed:", error);
@@ -71,4 +71,3 @@ const authProvider: AuthProvider = {
     },
 };
 
-export default authProvider;
