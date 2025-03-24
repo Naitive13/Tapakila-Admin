@@ -37,7 +37,7 @@ const authProvider: AuthProvider = {
             
             console.log("Login success:", data);
             localStorage.setItem("accessToken", data.token);
-            return { redirectTo: "/" 
+            return { redirectTo: "/"}
 
         } catch (error) {
             console.error("Login failed:", error);
