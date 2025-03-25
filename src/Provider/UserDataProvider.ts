@@ -63,7 +63,8 @@ export const UserDataProvider: DataProvider = {
             throw new Error(`Failed to delete user record : ${id} . ERROR : ${response.statusText}`);
         }
     
-        return { data: { id }}
+        return { data: id}
+
     },
     deleteMany: function <RecordType extends RaRecord = any>(resource: string, params: DeleteManyParams<RecordType>): Promise<DeleteManyResult<RecordType>> {
         throw new Error("Function not implemented.");
