@@ -1,4 +1,4 @@
-import { List, Datagrid, TextField, RichTextField, Show, SimpleShowLayout } from "react-admin";
+import { List, Datagrid, TextField, RichTextField, Show, SimpleShowLayout, useDelete } from "react-admin";
 
 export const UserList = () => {
   return (
@@ -15,6 +15,7 @@ export const UserList = () => {
 };
 
 export const UserShow = () => {
+  [useDelete ]
   return (
     <Show>
       <SimpleShowLayout>
