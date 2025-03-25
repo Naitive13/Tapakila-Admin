@@ -52,15 +52,18 @@ export const UserDataProvider: DataProvider = {
         throw new Error("Function not implemented.");
     },
     delete: async function <RecordType extends RaRecord = any>(resource: string, params: DeleteParams<RecordType>): Promise<DeleteResult<RecordType>> {
-        const { data : id } = params;
-        const response = await fetch(`${BASE_URL}/${id}`, { method: 'DELETE'});
+        const { id } = params;
+        const response = await fetch(`${BASE_URL}/${resource}/${id}`, 
+            { method: 'DELETE', headers: 
+                {
+            'Content-Type': 'application/json',
+          }});
 
         if (!response.ok){
             throw new Error(`Failed to delete user record : ${id} . ERROR : ${response.statusText}`);
         }
-        
-        const user = await response.json();
-        return {data: user}
+    
+        return { data: { id }}
     },
     deleteMany: function <RecordType extends RaRecord = any>(resource: string, params: DeleteManyParams<RecordType>): Promise<DeleteManyResult<RecordType>> {
         throw new Error("Function not implemented.");
