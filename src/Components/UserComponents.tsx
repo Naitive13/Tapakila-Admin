@@ -1,16 +1,36 @@
-import { List, Datagrid, TextField, RichTextField, Show, SimpleShowLayout, useDelete, useRecordContext } from "react-admin";
+import { useState } from "react";
+import { List, Datagrid, TextField, RichTextField, Show, SimpleShowLayout, useDelete, useRecordContext, Button, useRedirect, useNotify, Confirm } from "react-admin";
 
 const DeleteButton = () => {
   const user = useRecordContext();
-  const [deleteOne, { isPending, error }] = useDelete(
+  const notify = useNotify();
+  const redirect = useRedirect();
+
+  const [deleteOne, { isPending, error}] = useDelete(
       'user',
-      { id: user.id, previousData: user }
-  );
+      { id: user && user.id },
+      {
+        onSuccess: () =>{
+          notify(`user ${user && user.id} has been removed`, {type: "success"});
+          redirect("/")
+         },
+        onError: (error) =>{
+            notify(
+              `user ${user && user.id} has not been removed : ${error && error.message}`, {type: "error"})
+        }
+      }
+    );
+
+  
+
   const handleClick = () => {
-      deleteOne();
-  }
-  if (error) { return <p>ERROR</p>; }
-  return <button disabled={isPending} onClick={handleClick}>Delete</button>;
+    
+    deleteOne();
+  };
+
+  return (
+        <Button label="Delete" onClick={handleClick} />
+);
 };
 
 export const UserList = () => {
@@ -22,7 +42,7 @@ export const UserList = () => {
         <TextField source="email" />
         <RichTextField source="type" label="type" />
         <RichTextField source="creationDate" label="creation date" />
-        <DeleteButton/>
+        <DeleteButton />
       </Datagrid>
     </List>
   );
