@@ -2,10 +2,16 @@ import { CreateParams, CreateResult, DataProvider, DeleteManyParams, DeleteManyR
 import { BASE_URL } from "../Constant";
 
 export const UserDataProvider: DataProvider = {
+
     getList: async function <RecordType extends RaRecord = any>(resource: string, params: GetListParams & QueryFunctionContext): Promise<GetListResult<RecordType>> {
-
-        const response = await fetch(`${BASE_URL}/user/all`, { method: 'GET' });
-
+        const token = sessionStorage.getItem("accessToken");
+        const response = await fetch(`${BASE_URL}/user/all`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json' 
+            }
+        });
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
