@@ -6,6 +6,7 @@ import {
   ReservationList,
   ReservationShow,
 } from "./Components/ReservationComponents";
+import { TicketList, TicketShow } from "./Components/TicketComponents";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           list={ReservationList}
           show={ReservationShow}
         ></Resource>
+        <Resource name="Ticket" list={TicketList} show={TicketShow}></Resource>
       </Admin>
     </>
   );
