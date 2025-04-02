@@ -9,7 +9,7 @@ export const UserDataProvider: DataProvider = {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json' 
+                'Content-Type': 'application/json'
             }
         });
         if (!response.ok) {
@@ -45,34 +45,43 @@ export const UserDataProvider: DataProvider = {
         };
         return result;
     },
-    getManyReference: function <RecordType extends RaRecord = any>(resource: string, params: GetManyReferenceParams & QueryFunctionContext): Promise<GetManyReferenceResult<RecordType>> {
-        throw new Error("Function not implemented.");
-    },
-    update: function <RecordType extends RaRecord = any>(resource: string, params: UpdateParams): Promise<UpdateResult<RecordType>> {
-        throw new Error("Function not implemented.");
-    },
-    updateMany: function <RecordType extends RaRecord = any>(resource: string, params: UpdateManyParams): Promise<UpdateManyResult<RecordType>> {
-        throw new Error("Function not implemented.");
-    },
-    create: function <RecordType extends Omit<RaRecord, "id"> = any, ResultRecordType extends RaRecord = RecordType & { id: Identifier; }>(resource: string, params: CreateParams): Promise<CreateResult<ResultRecordType>> {
-        throw new Error("Function not implemented.");
+    create: async function <RecordType extends Omit<RaRecord, "id"> = any, ResultRecordType extends RaRecord = RecordType & { id: Identifier; }>(resource: string, params: CreateParams): Promise<CreateResult<ResultRecordType>> {
+        try {
+            const response = await fetch(`${BASE_URL}/user/create`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(params.data)
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(`Error ${response.status}: ${await response.text()}`);
+            }
+
+            return response.json();
+        } catch (error) {
+            console.error("Create request failed:", error);
+            throw error;
+        }
     },
     delete: async function <RecordType extends RaRecord = any>(resource: string, params: DeleteParams<RecordType>): Promise<DeleteResult<RecordType>> {
         const { id } = params;
-        const response = await fetch(`${BASE_URL}/${resource}/${id}`, 
-            { method: 'DELETE', headers: 
+        const response = await fetch(`${BASE_URL}/${resource}/${id}`,
+            {
+                method: 'DELETE', headers:
                 {
-            'Content-Type': 'application/json',
-          }});
+                    'Content-Type': 'application/json',
+                }
+            });
 
-        if (!response.ok){
+        if (!response.ok) {
             throw new Error(`Failed to delete user record : ${id} . ERROR : ${response.statusText}`);
         }
-    
-        return { data: id}
 
-    },
-    deleteMany: function <RecordType extends RaRecord = any>(resource: string, params: DeleteManyParams<RecordType>): Promise<DeleteManyResult<RecordType>> {
-        throw new Error("Function not implemented.");
+        return { data: id }
+
     }
 };
