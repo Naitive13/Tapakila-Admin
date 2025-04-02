@@ -1,6 +1,7 @@
 import { DataProvider, RaRecord, GetListParams, QueryFunctionContext, GetListResult, GetOneParams, GetOneResult, UpdateParams, UpdateResult, Identifier, CreateParams, CreateResult } from "react-admin";
 import { UserDataProvider } from "./UserDataProvider";
 import { ReservationDataProvider } from "./ReservationDataProvider";
+import { TicketDataProvider } from "./TicketDataProvider";
 
 const getDataProvider = (resource: string) => {
     switch (resource) {
@@ -8,6 +9,8 @@ const getDataProvider = (resource: string) => {
             return UserDataProvider;
         case "Reservation":
             return ReservationDataProvider;
+        case "Ticket":
+            return TicketDataProvider;
 
         default:
             throw new Error(resource);
