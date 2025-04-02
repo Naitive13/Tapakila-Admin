@@ -36,7 +36,7 @@ export const authProvider: AuthProvider = {
             }
             
             console.log("Login success:", data);
-            localStorage.setItem("accessToken", data.token);
+            sessionStorage.setItem("accessToken", data.token);
             return { redirectTo: "/"};
 
         } catch (error) {
@@ -52,7 +52,7 @@ export const authProvider: AuthProvider = {
     },
 
     checkAuth: async (): Promise<void> => {
-        return localStorage.getItem("accessToken")
+        return sessionStorage.getItem("accessToken")
             ? Promise.resolve()
             : Promise.reject();
     },
