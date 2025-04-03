@@ -67,6 +67,14 @@ export const userDataProvider: DataProvider = {
     },
     create: async function <RecordType extends Omit<RaRecord, "id"> = any, ResultRecordType extends RaRecord = RecordType & { id: Identifier; }>(resource: string, params: CreateParams): Promise<CreateResult<ResultRecordType>> {
         try {
+            const requestBody = {
+                userName: params.data.userName,
+                email: params.data.email,
+                password: params.data.password,
+                type: params.data.type,
+            };
+            console.log(requestBody);
+            
             const token = sessionStorage.getItem("accessToken")
             const response = await fetch(`${BASE_URL}/user/create`,
                 {
@@ -75,20 +83,18 @@ export const userDataProvider: DataProvider = {
                         'Authorization': `Bearer ${token}`,
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({
-                        userName: params.data.userName,
-                        email: params.data.email,
-                        password: params.data.password,
-                        type: params.data.type,
-                    })
+                    body: JSON.stringify(requestBody)
                 }
             );
-
             if (!response.ok) {
                 throw new Error(`Error ${response.status}: ${await response.text()}`);
             }
-
-            return response.json();
+            const responseData = await response.json();
+            console.log("Response Data:", responseData);
+    
+            return {
+                data: { id: responseData.userId, ...responseData }
+            } as CreateResult<ResultRecordType>;
         } catch (error) {
             console.error("Create request failed:", error);
             throw error;
