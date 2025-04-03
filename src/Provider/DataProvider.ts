@@ -1,16 +1,19 @@
 import { DataProvider, RaRecord, GetListParams, QueryFunctionContext, GetListResult, GetOneParams, GetOneResult, UpdateParams, UpdateResult, Identifier, CreateParams, CreateResult, DeleteManyParams, DeleteManyResult, DeleteParams, DeleteResult, GetManyParams, GetManyReferenceParams, GetManyReferenceResult, GetManyResult, UpdateManyParams, UpdateManyResult } from "react-admin";
-import { UserDataProvider } from "./UserDataProvider";
 import { ReservationDataProvider } from "./ReservationDataProvider";
 import { TicketDataProvider } from "./TicketDataProvider";
+import { EventDataProvider } from "./EventDataProvidet";
+import { userDataProvider } from "./UserDataProvider";
 
 const getDataProvider = (resource: string) => {
     switch (resource) {
         case "User":
-            return UserDataProvider;
+            return userDataProvider;
         case "Reservation":
             return ReservationDataProvider;
         case "Ticket":
             return TicketDataProvider;
+        case "Event":
+            return EventDataProvider;
         default:
             throw new Error(resource);
     }
