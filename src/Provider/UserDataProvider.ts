@@ -34,11 +34,11 @@ export const userDataProvider: DataProvider = {
         if (!params || !params.id) {
             throw new Error('Missing ID parameter');
         }
-        
+
         const { id } = params;
-        
+
         const token = sessionStorage.getItem("accessToken");
-        
+
         try {
             const response = await fetch(`${BASE_URL}/user/${id}`, {
                 method: "GET",
@@ -47,17 +47,16 @@ export const userDataProvider: DataProvider = {
                     'Content-Type': 'application/json'
                 }
             });
-    
             if (!response.ok) {
                 alert(`HTTP error! status: ${response.status}`);
-            
+
             }
-    
+
             const jsonData = await response.json();
-            
+
             return {
-                data: { 
-                    ...jsonData, 
+                data: {
+                    ...jsonData,
                     id: jsonData.userId || id // Fallback to original ID if userId doesn't exist
                 },
             };
@@ -68,13 +67,20 @@ export const userDataProvider: DataProvider = {
     },
     create: async function <RecordType extends Omit<RaRecord, "id"> = any, ResultRecordType extends RaRecord = RecordType & { id: Identifier; }>(resource: string, params: CreateParams): Promise<CreateResult<ResultRecordType>> {
         try {
+            const token = sessionStorage.getItem("accessToken")
             const response = await fetch(`${BASE_URL}/user/create`,
                 {
                     method: "POST",
                     headers: {
+                        'Authorization': `Bearer ${token}`,
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify(params.data)
+                    body: JSON.stringify({
+                        userName: params.data.userName,
+                        email: params.data.email,
+                        password: params.data.password,
+                        type: params.data.type,
+                    })
                 }
             );
 
@@ -90,8 +96,6 @@ export const userDataProvider: DataProvider = {
     },
     delete: async function <RecordType extends RaRecord = any>(resource: string, params: DeleteParams<RecordType>): Promise<DeleteResult<RecordType>> {
         const { id } = params;
-        
-
         if (!id) {
             throw new Error('Missing user ID for deletion');
         }
@@ -118,7 +122,8 @@ export const userDataProvider: DataProvider = {
 
             console.log(`Successfully deleted user ${id}`);
             return { data: { id } };
-            
+
+
         } catch (error) {
             console.error('User delete error:', error);
             throw error;

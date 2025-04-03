@@ -49,7 +49,7 @@ export const authProvider: AuthProvider = {
 
 
     logout: async (): Promise<void> => {
-        localStorage.removeItem("accessToken");
+        sessionStorage.removeItem("accessToken");
         return Promise.resolve();
     },
 
