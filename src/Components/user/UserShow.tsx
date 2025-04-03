@@ -1,5 +1,6 @@
-import { RichTextField, Show, SimpleShowLayout, TextField, useDelete, useRecordContext } from "react-admin";
-import { UserDeleteButton } from "./DeleteButton";
+
+import { RichTextField, Show, SimpleShowLayout, TextField } from "react-admin";
+
 
 export const UserShow = () => {
     return (
@@ -7,12 +8,10 @@ export const UserShow = () => {
         <SimpleShowLayout>
           <TextField source="id" /> {/* Doit être id et non userId */}
           <TextField source="userName" />
-          <TextField source="userEmail" />
+          <TextField source="email" />
           <RichTextField source="type" label="type" />
           <RichTextField source="creationDate" label="creation date" />
-          <UserDeleteButton/>
         </SimpleShowLayout>
-
       </Show>
     );
   };

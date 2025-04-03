@@ -1,49 +1,33 @@
-import { useState } from "react";
-import { useRecordContext, useNotify, useRedirect, Button } from "react-admin";
-import { userDataProvider } from "../../Provider/UserDataProvider";
+import { Button, useDelete, useNotify, useRecordContext, useRedirect } from "react-admin";
 
-export const UserDeleteButton = () => {
-    const record = useRecordContext();
-    const notify = useNotify();
-    const redirect = useRedirect();
-    const [isDeleting, setIsDeleting] = useState(false);
-    const [error, setError] = useState<Error | null>(null);
-  
-    const handleClick = async () => {
-      if (!record?.id) {
-        notify('No user selected', { type: 'warning' });
-        return;
-      }
-  
-      if (window.confirm(`Are you sure you want to delete user ${record.id}?`)) {
-        setIsDeleting(true);
-        setError(null);
-        
-        try {
-          await userDataProvider.delete('user', { id: record.id });
-          notify(`User ${record.id} deleted successfully`, { type: 'success' });
-          redirect('/'); 
-        } catch (error) {
-          setError(error instanceof Error ? error : new Error('Deletion failed'));
-          notify(`Delete failed: ${error.message}`, { type: 'error' });
-        } finally {
-          setIsDeleting(false);
+export const DeleteButton = () => {
+  const user = useRecordContext();
+  const notify = useNotify();
+  const redirect = useRedirect();
+
+  const [deleteOne] = useDelete(
+      'user',
+      { id: user && user.id },
+      {
+        onSuccess: () =>{
+          notify(`user ${user && user.id} has been removed`, {type: "success"});
+          redirect("/")
+         },
+        onError: (error) =>{
+            notify(
+              `user ${user && user.id} has not been removed : ${error && error.message}`, {type: "error"})
         }
       }
-    };
-  
-    if (error) {
-      return <p>Error: {error.message}</p>;
-    }
-  
-    return (
-      <Button
-        variant="contained"
-        color="error"
-        onClick={handleClick}
-        disabled={isDeleting}
-      >
-        {isDeleting ? 'Deleting...' : 'Delete'}
-      </Button>
     );
+
+  
+
+  const handleClick = () => {
+    
+    deleteOne();
   };
+
+  return (
+        <Button label="Delete" onClick={handleClick} />
+);
+};
