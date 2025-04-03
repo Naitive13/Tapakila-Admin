@@ -1,13 +1,11 @@
 import { Admin, Resource } from "react-admin";
 import { authProvider } from "./Provider/AuthProvider.";
 import { dataProvider } from "./Provider/DataProvider";
-import {
-  ReservationList,
-  ReservationShow,
-} from "./Components/ReservationComponents";
 import { TicketList, TicketShow } from "./Components/TicketComponents";
 import { UserList } from "./Components/user/UserList";
 import { UserShow } from "./Components/user/UserShow";
+import { ReservationList } from "./Components/reservation/ReservationList";
+import { ReservationShow } from "./Components/reservation/ReservationShow";
 
 function App() {
   return (

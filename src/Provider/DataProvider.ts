@@ -21,14 +21,14 @@ export const dataProvider: DataProvider = {
         params: GetListParams & QueryFunctionContext
     ): Promise<GetListResult<RecordType>> {
         const currentDataProvider = getDataProvider(resource);
-        return currentDataProvider.getList(params);
+        return currentDataProvider.getList(resource, params);
     },
     getOne: async function <RecordType extends RaRecord = any>(
         resource: string,
         params: GetOneParams<RecordType> & QueryFunctionContext
     ): Promise<GetOneResult<RecordType>> {
         const currentDataProvider = getDataProvider(resource);
-        return currentDataProvider.getOne(params);
+        return currentDataProvider.getOne(resource, params);
     },
 
     update: async function <RecordType extends RaRecord = any>(
@@ -36,7 +36,7 @@ export const dataProvider: DataProvider = {
         params: UpdateParams
     ): Promise<UpdateResult<RecordType>> {
         const currentDataProvider = getDataProvider(resource);
-        return currentDataProvider.update(params);
+        return currentDataProvider.update(resource, params);
     },
     create: async function <
         RecordType extends Omit<RaRecord, "id"> = any,
@@ -46,7 +46,7 @@ export const dataProvider: DataProvider = {
         params: CreateParams
     ): Promise<CreateResult<ResultRecordType>> {
         const currentDataProvider = getDataProvider(resource);
-        return currentDataProvider.create(params);
+        return currentDataProvider.create(resource, params);
     },
     getMany: function <RecordType extends RaRecord = any>(resource: string, params: GetManyParams<RecordType> & QueryFunctionContext): Promise<GetManyResult<RecordType>> {
         throw new Error("Function not implemented.");
