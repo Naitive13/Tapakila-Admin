@@ -39,7 +39,7 @@ export const UserDeleteButton = () => {
 
   return (
     <Button
-      variant="contained"
+      variant="outlined"
       color="error"
       onClick={handleClick}
       disabled={isDeleting}
