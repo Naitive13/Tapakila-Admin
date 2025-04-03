@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <Admin authProvider={authProvider} dataProvider={dataProvider}>
-        <Resource name="User" list={UserList} show={UserShow}></Resource>
+        <Resource name="User" list={UserList} show={UserShow} create={UserCreate}></Resource>
         <Resource
           name="Reservation"
           list={ReservationList}

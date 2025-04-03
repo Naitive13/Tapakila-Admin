@@ -31,5 +31,3 @@ export const DeleteButton = () => {
         <Button label="Delete" onClick={handleClick} />
 );
 };
-
-

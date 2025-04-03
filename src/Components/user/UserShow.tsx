@@ -1,4 +1,6 @@
+
 import { RichTextField, Show, SimpleShowLayout, TextField } from "react-admin";
+
 
 export const UserShow = () => {
     return (
