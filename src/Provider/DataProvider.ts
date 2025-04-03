@@ -1,7 +1,7 @@
 import { DataProvider, RaRecord, GetListParams, QueryFunctionContext, GetListResult, GetOneParams, GetOneResult, UpdateParams, UpdateResult, Identifier, CreateParams, CreateResult, DeleteManyParams, DeleteManyResult, DeleteParams, DeleteResult, GetManyParams, GetManyReferenceParams, GetManyReferenceResult, GetManyResult, UpdateManyParams, UpdateManyResult } from "react-admin";
 import { ReservationDataProvider } from "./ReservationDataProvider";
 import { TicketDataProvider } from "./TicketDataProvider";
-import { EventDataProvider } from "./EventDataProvidet";
+import { EventDataProvider } from "./EventDataProvider";
 import { userDataProvider } from "./UserDataProvider";
 
 const getDataProvider = (resource: string) => {
