@@ -9,6 +9,7 @@ import { ReservationShow } from "./Components/reservation/ReservationShow";
 import { UserCreate } from "./Components/user/UserCreate";
 import { EventList } from "./Components/event/EventList";
 import { EventShow } from "./Components/event/EventShow";
+import { EventCreate } from "./Components/event/EventCreate";
 
 function App() {
   return (
@@ -26,7 +27,12 @@ function App() {
           show={ReservationShow}
         ></Resource>
         <Resource name="Ticket" list={TicketList} show={TicketShow}></Resource>
-        <Resource name="Event" list={EventList} show={EventShow}></Resource>
+        <Resource
+          name="Event"
+          list={EventList}
+          show={EventShow}
+          create={EventCreate}
+        ></Resource>
       </Admin>
     </>
   );
