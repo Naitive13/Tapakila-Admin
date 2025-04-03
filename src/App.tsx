@@ -11,11 +11,15 @@ import { EventList } from "./Components/event/EventList";
 import { EventShow } from "./Components/event/EventShow";
 import { EventCreate } from "./Components/event/EventCreate";
 import { MyLayout } from "./screen/Layout";
+import { theme } from "./screen/Theme";
+
+
 
 function App() {
   return (
     <>
       <Admin
+        theme={theme}
         authProvider={authProvider}
         dataProvider={dataProvider}
         layout={MyLayout}
