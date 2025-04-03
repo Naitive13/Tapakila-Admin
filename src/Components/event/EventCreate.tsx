@@ -1,6 +1,7 @@
 import {
   Create,
   DateInput,
+  DateTimeInput,
   SelectInput,
   SimpleForm,
   TextInput,
@@ -32,7 +33,7 @@ export const EventCreate = () => {
       <SimpleForm>
         <TextInput source="eventTitle" />
         <SelectInput source="eventType" choices={eventTypes} />
-        <DateInput source="eventDate" />
+        <DateTimeInput source="eventDate" />
         <SelectInput source="eventStatus" choices={eventStatuses} />
         <TextInput
           source="eventPoster"
@@ -42,11 +43,3 @@ export const EventCreate = () => {
     </Create>
   );
 };
-
-// // {
-//     "eventTitle": "Concert de Rock",
-//     "eventType": "CONCERT",
-//     "eventDate": "2025-05-15T20:00:00",
-//     "eventStatus": "UPCOMING",
-//     "eventPoster": "https://example.com/poster.jpg"
-// }
