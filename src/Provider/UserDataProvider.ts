@@ -87,8 +87,12 @@ export const userDataProvider: DataProvider = {
             if (!response.ok) {
                 throw new Error(`Error ${response.status}: ${await response.text()}`);
             }
-
-            return response.json();
+            const responseData = await response.json();
+            console.log("Response Data:", responseData);
+    
+            return {
+                data: { id: responseData.userId, ...responseData }
+            } as CreateResult<ResultRecordType>;
         } catch (error) {
             console.error("Create request failed:", error);
             throw error;
