@@ -111,7 +111,7 @@ export const userDataProvider: DataProvider = {
                 }
             });
 
-            if (!response.ok) {=
+            if (!response.ok) {
                 console.error('Delete failed:', errorText);
                 throw new Error(errorText || 'Failed to delete user');
             }
