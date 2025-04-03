@@ -8,12 +8,13 @@ import {
 import { TicketList, TicketShow } from "./Components/TicketComponents";
 import { UserList } from "./Components/user/UserList";
 import { UserShow } from "./Components/user/UserShow";
+import { UserCreate } from "./Components/user/UserCreate";
 
 function App() {
   return (
     <>
       <Admin authProvider={authProvider} dataProvider={dataProvider}>
-        <Resource name="User" list={UserList} show={UserShow}></Resource>
+        <Resource name="User" list={UserList} show={UserShow} create={UserCreate}></Resource>
         <Resource
           name="Reservation"
           list={ReservationList}
