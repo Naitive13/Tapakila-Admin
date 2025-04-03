@@ -10,7 +10,9 @@ export const UserShow = () => {
           <TextField source="userEmail" />
           <RichTextField source="type" label="type" />
           <RichTextField source="creationDate" label="creation date" />
+          <UserDeleteButton/>
         </SimpleShowLayout>
+
       </Show>
     );
   };

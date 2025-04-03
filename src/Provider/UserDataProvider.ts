@@ -47,7 +47,6 @@ export const userDataProvider: DataProvider = {
                     'Content-Type': 'application/json'
                 }
             });
-
             if (!response.ok) {
                 alert(`HTTP error! status: ${response.status}`);
 
@@ -97,8 +96,6 @@ export const userDataProvider: DataProvider = {
     },
     delete: async function <RecordType extends RaRecord = any>(resource: string, params: DeleteParams<RecordType>): Promise<DeleteResult<RecordType>> {
         const { id } = params;
-
-
         if (!id) {
             throw new Error('Missing user ID for deletion');
         }
@@ -125,6 +122,7 @@ export const userDataProvider: DataProvider = {
 
             console.log(`Successfully deleted user ${id}`);
             return { data: { id } };
+
 
         } catch (error) {
             console.error('User delete error:', error);

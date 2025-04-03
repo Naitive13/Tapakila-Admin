@@ -11,7 +11,6 @@ export const UserList = () => {
         <RichTextField source="type" label="type" />
         <RichTextField source="creationDate" label="creation date" />
         <UserDeleteButton />
-
       </Datagrid>
     </List>
   );
