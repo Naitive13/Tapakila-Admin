@@ -23,7 +23,7 @@ export const UserDeleteButton = () => {
         // Directly call userDataProvider.delete
         await userDataProvider.delete('user', { id: record.id });
         notify(`User ${record.id} deleted successfully`, { type: 'success' });
-        redirect('/users'); // Redirect to user list after deletion
+        redirect('/'); // Redirect to user list after deletion
       } catch (error) {
         setError(error instanceof Error ? error : new Error('Deletion failed'));
         notify(`Delete failed: ${error.message}`, { type: 'error' });
