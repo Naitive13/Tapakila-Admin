@@ -10,11 +10,16 @@ import { UserCreate } from "./Components/user/UserCreate";
 import { EventList } from "./Components/event/EventList";
 import { EventShow } from "./Components/event/EventShow";
 import { EventCreate } from "./Components/event/EventCreate";
+import { MyLayout } from "./screen/Layout";
 
 function App() {
   return (
     <>
-      <Admin authProvider={authProvider} dataProvider={dataProvider}>
+      <Admin
+        authProvider={authProvider}
+        dataProvider={dataProvider}
+        layout={MyLayout}
+      >
         <Resource
           name="User"
           list={UserList}
