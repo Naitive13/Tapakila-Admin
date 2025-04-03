@@ -1,5 +1,12 @@
-import { List, Datagrid, TextField, RichTextField } from "react-admin";
+import {
+  List,
+  Datagrid,
+  TextField,
+  RichTextField,
+  useRecordContext,
+} from "react-admin";
 import { EventDeleteButton } from "./EventDeleteButton";
+import { EventPosterField } from "./eventPoster/EventPosterField";
 
 export const EventList = () => {
   return (
@@ -10,7 +17,8 @@ export const EventList = () => {
         <TextField source="eventType" label="Event Type" />
         <RichTextField source="eventDate" label="Event date" />
         <TextField source="eventStatus" label="Event Status" />
-        <TextField source="eventPoster" label="Event Poster" />
+        <EventPosterField />
+
         <EventDeleteButton />
       </Datagrid>
     </List>

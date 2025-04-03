@@ -1,4 +1,6 @@
 import { Show, SimpleShowLayout, TextField, RichTextField } from "react-admin";
+import { EventPosterField } from "./eventPoster/EventPosterField";
+import { EventPosterDownloadButton } from "./eventPoster/EventPosterDownloadButton";
 
 export const EventShow = () => {
   return (
@@ -9,7 +11,8 @@ export const EventShow = () => {
         <TextField source="eventType" label="Event Type" />
         <RichTextField source="eventDate" label="Event date" />
         <TextField source="eventStatus" label="Event Status" />
-        <TextField source="eventPoster" label="Event Poster" />
+        <EventPosterField />
+        <EventPosterDownloadButton />
       </SimpleShowLayout>
     </Show>
   );
