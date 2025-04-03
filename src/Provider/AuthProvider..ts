@@ -34,8 +34,6 @@ export const authProvider: AuthProvider = {
             if (detailedData.userType != "admin"){
                 throw new Error("Must be admin to log in! userType : " + detailedData.userType);
             }
-            
-            console.log("Login success:", data);
 
             sessionStorage.setItem("accessToken", data.token);
             sessionStorage.setItem("tokenExpiry", detailedData.exp.toString());
