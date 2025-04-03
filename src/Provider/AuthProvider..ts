@@ -36,7 +36,9 @@ export const authProvider: AuthProvider = {
             }
             
             console.log("Login success:", data);
+
             sessionStorage.setItem("accessToken", data.token);
+            sessionStorage.setItem("tokenExpiry", detailedData.exp.toString());
             return { redirectTo: "/"};
 
         } catch (error) {
@@ -51,21 +53,40 @@ export const authProvider: AuthProvider = {
         return Promise.resolve();
     },
 
-    checkAuth: async (): Promise<void> => {
-        return sessionStorage.getItem("accessToken")
-            ? Promise.resolve()
-            : Promise.reject();
+    checkAuth: async () => {
+        const token = sessionStorage.getItem("accessToken");
+        
+        if (!token) {
+            console.log("No token found");
+            return Promise.reject();
+        }
+
+        try {
+            // Verify token structure
+            const decoded = decodeJWT(token);
+            if (!decoded.exp || Date.now() >= decoded.exp * 1000) {
+                console.log("Token expired");
+                sessionStorage.removeItem("accessToken");
+                return Promise.reject();
+            }
+            return Promise.resolve();
+        } catch (error) {
+            console.log("Invalid token:", error);
+            sessionStorage.removeItem("accessToken");
+            return Promise.reject();
+        }
     },
 
-    checkError: async (error: any): Promise<void> => {
-        const status = error.status;
-        if (status === 401 || status === 403) {
-            localStorage.removeItem("accessToken");
+
+    checkError: async (error: any) => {
+        if (error?.status === 401 || error?.status === 403) {
+            console.log("Authentication error, clearing token");
+            sessionStorage.removeItem("accessToken");
+            sessionStorage.removeItem("tokenExpiry");
             return Promise.reject();
         }
         return Promise.resolve();
     },
-
     getPermissions: async (): Promise<any> => {
         return Promise.resolve();
     },
