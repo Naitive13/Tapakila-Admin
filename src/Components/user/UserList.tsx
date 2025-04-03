@@ -5,7 +5,6 @@ export const UserList = () => {
     return (
       <List>
         <Datagrid>
-          {/* <TextField source="userId" /> */}
           <TextField source="userName" />
           <TextField source="email" />
           <RichTextField source="type" label="type" />
