@@ -15,7 +15,7 @@ export const TicketDataProvider: DataProvider = {
             jsonData[index] = { ...element, id: index };
         }
         const result: GetListResult = {
-            data: jsonData.map(reservation => ({ ...reservation, id: reservation.reservationID })),
+            data: jsonData.map(ticket => ({ ...ticket, id: ticket.ticket_id })),
             total: jsonData.length,
         };
 
@@ -32,7 +32,7 @@ export const TicketDataProvider: DataProvider = {
         const jsonData = await response.json();
 
         const result: GetOneResult = {
-            data: { ...jsonData, id: jsonData.ticketID },
+            data: { ...jsonData, id: jsonData.ticket_id },
         };
         return result;
     },
