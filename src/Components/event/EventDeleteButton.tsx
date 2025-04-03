@@ -23,7 +23,7 @@ export const EventDeleteButton = () => {
         // Directly call userDataProvider.delete
         await EventDataProvider.delete("user", { id: record.id });
         notify(`Event ${record.id} deleted successfully`, { type: "success" });
-        redirect("/events"); 
+        redirect("/events");
       } catch (error) {
         setError(error instanceof Error ? error : new Error("Deletion failed"));
         notify(`Delete failed: ${error.message}`, { type: "error" });
@@ -39,7 +39,7 @@ export const EventDeleteButton = () => {
 
   return (
     <Button
-      variant="contained"
+      variant="outlined"
       color="error"
       onClick={handleClick}
       disabled={isDeleting}
