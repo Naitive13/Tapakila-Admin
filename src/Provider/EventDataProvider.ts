@@ -69,11 +69,11 @@ export const EventDataProvider: DataProvider = {
     delete: async function <RecordType extends RaRecord = any>(resource: string, params: DeleteParams<RecordType>): Promise<DeleteResult<RecordType>> {
         const { id } = params;
         if (!id) {
-            throw new Error('Missing user ID for deletion');
+            throw new Error('Missing event ID for deletion');
         }
 
         try {
-            console.log(`Deleting user ${id}...`);
+            console.log(`Deleting event ${id}...`);
             const response = await fetch(`${BASE_URL}/events/${id}`, {
                 method: 'DELETE',
                 headers: {
@@ -86,12 +86,12 @@ export const EventDataProvider: DataProvider = {
                 throw new Error(errorText || 'Failed to delete event');
             }
 
-            console.log(`Successfully deleted user ${id}`);
+            console.log(`Successfully deleted event ${id}`);
             return { data: { id } };
 
 
         } catch (error) {
-            console.error('User delete error:', error);
+            console.error('Event delete error:', error);
             throw error;
         }
     },

@@ -1,4 +1,5 @@
 import { List, Datagrid, TextField, RichTextField } from "react-admin";
+import { ReservationDeleteButton } from "./ReservationDeleteButton";
 
 export const ReservationList = () => {
   return (
@@ -8,6 +9,7 @@ export const ReservationList = () => {
         <TextField source="ticketID" label="ticket ID" />
         <TextField source="userID" label="user ID" />
         <RichTextField source="reservationDate" label="reservation date" />
+        <ReservationDeleteButton />
       </Datagrid>
     </List>
   );
