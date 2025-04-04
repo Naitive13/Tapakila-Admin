@@ -96,16 +96,30 @@ export const EventDataProvider: DataProvider = {
         }
     },
     update: async function <RecordType extends RaRecord = any>(
-        params: UpdateParams,
+        resource: string,
+        params: UpdateParams
     ): Promise<UpdateResult<RecordType>> {
         const { data, id } = params;
-        const updateEvent = await fetch(`${BASE_URL}/events/${id}`,
-            { method: "POST", body: JSON.stringify(data) },
-        );
 
-        const result: CreateActionData = {
-            data: await updateEvent.json(),
+        const response = await fetch(`${BASE_URL}/events/${id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to update event");
+        }
+
+        const resultData = await response.json();
+
+        const result: UpdateResult<RecordType> = {
+            data: { ...resultData, id: resultData.eventId }, 
         };
+
         return result;
-    },
+    }
+
 }
