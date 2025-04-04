@@ -3,12 +3,12 @@ import { createTheme } from "@mui/material";
 export const theme = createTheme({
     palette: {
         primary: {
-            main: "#E16A54",
+            main: "#3F7D58",
             dark: "#000",
             light: "#000",
         },
         secondary: {
-            main: "#E16A54",
+            main: "#3F7D58",
         },
     },
     typography: {
@@ -31,8 +31,7 @@ export const theme = createTheme({
         MuiPaper: {
             styleOverrides: {
                 elevation1: {
-                    boxShadow: "0px 10px 15px -3px rgba(160, 93, 93, 0.5)",
-                    border: "1px solid black"
+                    boxShadow: "0px 10px 15px -3px rgba(0, 0, 0, 0.1)",
                 },
             },
         },
