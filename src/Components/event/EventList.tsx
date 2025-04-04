@@ -11,7 +11,7 @@ import { EventPosterField } from "./eventPoster/EventPosterField";
 export const EventList = () => {
   return (
     <List>
-      <Datagrid>
+      <Datagrid bulkActionButtons={false}>
         <TextField source="eventId" label="Event ID" />
         <TextField source="eventTitle" label="Event title" />
         <TextField source="eventType" label="Event Type" />

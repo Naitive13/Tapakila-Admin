@@ -11,7 +11,7 @@ import {
 export const TicketList = () => {
   return (
     <List>
-      <Datagrid>
+      <Datagrid bulkActionButtons={false}>
         <TextField source="ticket_id" label="Ticket ID" />
         <TextField source="event_id" label="Event ID" />
         <RichTextField source="reservationStatus" label="Reservation Status" />
