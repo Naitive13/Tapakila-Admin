@@ -36,4 +36,32 @@ export const TicketDataProvider: DataProvider = {
         };
         return result;
     },
+    create: async function <RecordType extends Omit<RaRecord, "id"> = any, ResultRecordType extends RaRecord = RecordType & { id: Identifier; }>(resource: string, params: CreateParams): Promise<CreateResult<ResultRecordType>> {
+        const { data } = params;
+        console.log(data);
+
+
+        const createTicket = await fetch(`${BASE_URL}/tickets`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!createTicket.ok) {
+            throw new Error('Failed to create event');
+        }
+
+        const resultData = await createTicket.json();
+
+        const result: CreateResult<ResultRecordType> = {
+            data: { ...resultData, id: resultData.eventId },
+        };
+
+        return result;
+    },
+    delete: function <RecordType extends RaRecord = any>(resource: string, params: DeleteParams<RecordType>): Promise<DeleteResult<RecordType>> {
+        throw new Error("Function not implemented.");
+    },
 }

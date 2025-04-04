@@ -1,7 +1,11 @@
 import { Admin, Resource } from "react-admin";
 import { authProvider } from "./Provider/AuthProvider.";
 import { dataProvider } from "./Provider/DataProvider";
-import { TicketList, TicketShow } from "./Components/TicketComponents";
+import {
+  TicketCreate,
+  TicketList,
+  TicketShow,
+} from "./Components/TicketComponents";
 import { UserList } from "./Components/user/UserList";
 import { UserShow } from "./Components/user/UserShow";
 import { ReservationList } from "./Components/reservation/ReservationList";
@@ -34,7 +38,12 @@ function App() {
           list={ReservationList}
           show={ReservationShow}
         ></Resource>
-        <Resource name="Ticket" list={TicketList} show={TicketShow}></Resource>
+        <Resource
+          name="Ticket"
+          list={TicketList}
+          show={TicketShow}
+          create={TicketCreate}
+        ></Resource>
         <Resource
           name="Event"
           list={EventList}
