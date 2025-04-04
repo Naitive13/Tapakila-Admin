@@ -6,7 +6,7 @@ export const EventShow = () => {
   return (
     <Show>
       <SimpleShowLayout>
-        <TextField source="eventId" label="Event ID" />
+        <TextField source="eventId" label="Event ID"/>
         <TextField source="eventTitle" label="Event title" />
         <TextField source="eventType" label="Event Type" />
         <RichTextField source="eventDate" label="Event date" />

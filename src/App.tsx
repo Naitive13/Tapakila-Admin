@@ -12,8 +12,7 @@ import { EventShow } from "./Components/event/EventShow";
 import { EventCreate } from "./Components/event/EventCreate";
 import { MyLayout } from "./screen/Layout";
 import { theme } from "./screen/Theme";
-
-
+import { EventEdit } from "./Components/event/eventPoster/EventEdit";
 
 function App() {
   return (
@@ -41,6 +40,7 @@ function App() {
           list={EventList}
           show={EventShow}
           create={EventCreate}
+          edit={EventEdit}
         ></Resource>
       </Admin>
     </>

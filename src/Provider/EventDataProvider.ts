@@ -94,5 +94,18 @@ export const EventDataProvider: DataProvider = {
             console.error('User delete error:', error);
             throw error;
         }
-    }
+    },
+    update: async function <RecordType extends RaRecord = any>(
+        params: UpdateParams,
+    ): Promise<UpdateResult<RecordType>> {
+        const { data, id } = params;
+        const updateEvent = await fetch(`${BASE_URL}/events/${id}`,
+            { method: "POST", body: JSON.stringify(data) },
+        );
+
+        const result: CreateActionData = {
+            data: await updateEvent.json(),
+        };
+        return result;
+    },
 }
