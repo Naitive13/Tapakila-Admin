@@ -1,8 +1,7 @@
-import { CreateParams, CreateResult, DataProvider, DeleteManyParams, DeleteManyResult, DeleteParams, DeleteResult, GetListParams, GetListResult, GetManyParams, GetManyReferenceParams, GetManyReferenceResult, GetOneParams, GetOneResult, Identifier, Notification, QueryFunctionContext, RaRecord, UpdateManyParams, UpdateManyResult, UpdateParams, UpdateResult, useNotify } from "react-admin";
+import { CreateParams, CreateResult, DataProvider, DeleteManyParams, DeleteManyResult, DeleteParams, DeleteResult, GetListParams, GetListResult, GetManyParams, GetManyReferenceParams, GetManyReferenceResult, GetManyResult, GetOneParams, GetOneResult, Identifier, Notification, QueryFunctionContext, RaRecord, UpdateManyParams, UpdateManyResult, UpdateParams, UpdateResult, useNotify } from "react-admin";
 import { BASE_URL } from "../Constant";
 
 export const userDataProvider: DataProvider = {
-
     getList: async function <RecordType extends RaRecord = any>(resource: string, params: GetListParams & QueryFunctionContext): Promise<GetListResult<RecordType>> {
         const token = sessionStorage.getItem("accessToken");
         const response = await fetch(`${BASE_URL}/user/all`, {
@@ -67,7 +66,7 @@ export const userDataProvider: DataProvider = {
     },
     create: async function <RecordType extends Omit<RaRecord, "id"> = any, ResultRecordType extends RaRecord = RecordType & { id: Identifier; }>(resource: string, params: CreateParams): Promise<CreateResult<ResultRecordType>> {
         try {
-            const token = sessionStorage.getItem("accessToken")
+            const token = sessionStorage.getItem("accessToken");
             const response = await fetch(`${BASE_URL}/user/create`,
                 {
                     method: "POST",
@@ -89,7 +88,7 @@ export const userDataProvider: DataProvider = {
             }
             const responseData = await response.json();
             console.log("Response Data:", responseData);
-    
+
             return {
                 data: { id: responseData.userId, ...responseData }
             } as CreateResult<ResultRecordType>;
@@ -132,5 +131,69 @@ export const userDataProvider: DataProvider = {
             console.error('User delete error:', error);
             throw error;
         }
-    }
+    },
+    update: async function <RecordType extends RaRecord = any>(
+        resource: string, 
+        params: UpdateParams<RecordType>
+      ): Promise<UpdateResult<RecordType>> {
+        try {
+          const { id, data } = params;
+          const token = sessionStorage.getItem("accessToken");
+      
+          if (!token) {
+            throw new Error("Authentication token missing");
+          }
+      
+          // Special handling for user type updates
+          if (resource === 'user' && data.type) {
+            const url = `${BASE_URL}/user/${id}?type=${encodeURIComponent(data.type)}`;
+            
+            const response = await fetch(url, {
+              method: "PUT",
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                "Content-Type": "application/json"
+              }
+            });
+      
+            if (!response.ok) {
+              const error = await response.json();
+              throw new Error(error.message || 'User type update failed');
+            }
+      
+            const responseData = await response.json();
+            return {
+              data: { id: id as string, ...responseData }
+            };
+          }
+      
+          // Default update implementation for other resources
+          const response = await fetch(`${BASE_URL}/${resource}/${id}`, {
+            method: "PUT",
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+          });
+      
+          if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Update failed');
+          }
+      
+          const responseData = await response.json();
+          return {
+            data: { id: id as string, ...responseData }
+          };
+      
+        } catch (error) {
+          console.error("Update error:", error);
+          throw new Error(
+            error instanceof Error 
+              ? error.message 
+              : 'An unknown error occurred during update'
+          );
+        }
+      }
 };

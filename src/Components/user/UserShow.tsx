@@ -1,5 +1,6 @@
 
-import { RichTextField, Show, SimpleShowLayout, TextField } from "react-admin";
+import {Show, SimpleShowLayout, TextField } from "react-admin";
+import { ToggleUserTypeButton } from "./ToggleUserTypeButton";
 
 
 export const UserShow = () => {
@@ -8,9 +9,9 @@ export const UserShow = () => {
         <SimpleShowLayout>
           <TextField source="id" /> {/* Doit être id et non userId */}
           <TextField source="userName" />
-          <TextField source="email" />
-          <RichTextField source="type" label="type" />
-          <RichTextField source="creationDate" label="creation date" />
+          <TextField source="userEmail" />
+          <TextField source="type" label="type" />
+          <ToggleUserTypeButton/>
         </SimpleShowLayout>
       </Show>
     );
