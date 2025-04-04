@@ -61,7 +61,32 @@ export const TicketDataProvider: DataProvider = {
 
         return result;
     },
-    delete: function <RecordType extends RaRecord = any>(resource: string, params: DeleteParams<RecordType>): Promise<DeleteResult<RecordType>> {
-        throw new Error("Function not implemented.");
+    delete: async function <RecordType extends RaRecord = any>(resource: string, params: DeleteParams<RecordType>): Promise<DeleteResult<RecordType>> {
+        const { id } = params;
+        if (!id) {
+            throw new Error('Missing Reservation for deletion');
+        }
+
+        try {
+            console.log(`Deleting user ${id}...`);
+            const response = await fetch(`${BASE_URL}/tickets/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                console.error('Delete failed:');
+            }
+
+            console.log(`Successfully deleted user ${id}`);
+            return { data: { id } };
+
+
+        } catch (error) {
+            console.error('User delete error:', error);
+            throw error;
+        }
     },
 }

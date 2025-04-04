@@ -43,7 +43,7 @@ function App() {
           list={TicketList}
           show={TicketShow}
           create={TicketCreate}
-        ></Resource>
+          ></Resource>
         <Resource
           name="Event"
           list={EventList}
