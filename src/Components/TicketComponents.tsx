@@ -6,7 +6,20 @@ import {
   DeleteButton,
   Show,
   SimpleShowLayout,
+  Create,
+  DateTimeInput,
+  SelectInput,
+  SimpleForm,
+  TextInput,
 } from "react-admin";
+
+const ticketTypes = [
+  { id: "regular", name: "regular" },
+  { id: "vip", name: "vip" },
+  { id: "gold", name: "Gold" },
+  { id: "bronze", name: "bronze" },
+  { id: "silver", name: "Silver" },
+];
 
 export const TicketList = () => {
   return (
@@ -31,5 +44,16 @@ export const TicketShow = () => {
         <RichTextField source="ticketType" label="Ticket Type" />
       </SimpleShowLayout>
     </Show>
+  );
+};
+
+export const TicketCreate = () => {
+  return (
+    <Create>
+      <SimpleForm>
+        <TextInput source="event_id" placeholder="Paste event id here"/>
+        <SelectInput source="ticketType" choices={ticketTypes} />
+      </SimpleForm>
+    </Create>
   );
 };
